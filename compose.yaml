@@ -1,0 +1,24 @@
+services:
+  oracle-db:
+    image: southamerica-east1-docker.pkg.dev/cloud-sgm/sgm-oracle/sgm-oracle:latest
+    container_name: sgm-oracle-db
+    platform: linux/amd64
+    restart: always
+    networks:
+      - app-network
+    ports:
+      - 1521:1521
+      - 5500:5500
+    environment:
+      - ORACLE_PWD=Sgm#2025
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+      - ./scripts/startup:/opt/oracle/scripts/startup
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  oracle-data:
+    driver: local
